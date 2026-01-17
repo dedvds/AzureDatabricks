@@ -1,0 +1,63 @@
+# Polymarket Trading Bot Configuration
+
+# Risk Management Settings
+risk_management:
+  total_capital: 10000  # Total capital in USD
+  max_position_size_pct: 0.1  # Maximum position size as % of capital (10%)
+  max_portfolio_risk_pct: 0.2  # Maximum total exposure as % of capital (20%)
+  max_positions: 10  # Maximum number of concurrent positions
+  stop_loss_pct: 0.15  # Stop loss at -15%
+  take_profit_pct: 0.30  # Take profit at +30%
+
+# Trading Strategies Configuration
+strategies:
+  # Mean Reversion Strategy
+  mean_reversion:
+    enabled: true
+    min_edge: 0.05  # Minimum probability edge (5%)
+    confidence_threshold: 0.7  # Minimum confidence to trade (70%)
+    extreme_low: 0.05  # Buy when probability < 5%
+    extreme_high: 0.95  # Sell when probability > 95%
+
+  # Arbitrage Strategy
+  arbitrage:
+    enabled: true
+    min_edge: 0.05
+    confidence_threshold: 0.7
+    min_prob_sum: 0.95  # Flag when probabilities sum to < 95%
+    max_prob_sum: 1.05  # Flag when probabilities sum to > 105%
+
+  # Value Strategy (requires external probability estimates)
+  value:
+    enabled: false  # Set to true when you have fundamental probability estimates
+    min_edge: 0.05
+    confidence_threshold: 0.7
+    fundamental_probabilities: {}  # Add your probability estimates here
+
+# Market Filtering
+market_filters:
+  min_liquidity: 1000  # Minimum market liquidity in USD
+  max_markets_to_scan: 100  # Maximum markets to scan per cycle
+  active_only: true  # Only scan active markets
+  exclude_keywords:  # Exclude markets containing these keywords
+    - "test"
+    - "demo"
+
+# Bot Execution Settings
+execution:
+  scan_interval: 300  # Scan for opportunities every 5 minutes (300 seconds)
+  rate_limit_delay: 0.6  # Delay between API calls (seconds)
+  dry_run: true  # Set to false to enable live trading
+  max_retries: 3  # Maximum retries for failed API calls
+
+# Logging
+logging:
+  level: INFO  # DEBUG, INFO, WARNING, ERROR
+  log_file: "bot.log"
+  console_output: true
+
+# Notifications (optional - configure your preferred notification method)
+notifications:
+  enabled: false
+  # slack_webhook: "your-webhook-url"
+  # email: "your-email@example.com"
